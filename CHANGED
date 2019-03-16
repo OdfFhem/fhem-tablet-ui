@@ -1,4 +1,0 @@
-FHEM Tablet UI last changes:
- 2019-02-18
- - slider: fixed a handle-position bug for bigger sizes
- - link: added support for embedded widgets

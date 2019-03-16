@@ -1,0 +1,86 @@
+
+ftui-button {
+    cursor: auto;
+    display: block;
+}
+
+ftui-button #wrapper {
+    flex-direction: row;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+/* default */
+
+ftui-button #icon {
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: #505050;
+    color: #2A2A2A;
+    width: 3.8em;
+    height: 3.8em;
+    line-height: 3.8em;
+    margin: 0.25em;
+}
+
+ftui-button.active #icon {
+    background-color: #aa6900;
+}
+
+ftui-button #icon:before {
+    line-height: 2em;
+    font-size: 1.9em;
+}
+
+
+/* style: btn-text */
+
+ftui-button.btn-text #icon {
+    border-radius: 17px;
+    text-align: center;
+    border: none;
+    background-color: #505050;
+    color: #fff;
+    padding-left: 6em;
+    padding-right: 2.5em;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    outline: none;
+    position: relative;
+    width: initial;
+}
+
+ftui-button.btn-text.active #icon {
+    background-color: #fcad26;
+}
+
+ftui-button.btn-text #icon:before {
+    position: absolute;
+    height: 100%;
+    left: 0;
+    top: 0;
+    line-height: 2.6em;
+    font-size: 1.5em;
+    width: 3em;
+    border-right: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+/* circle-thin */
+
+ftui-button.circle-thin #icon {
+    background-color: transparent;
+    color: #505050;
+    line-height: 3.5em;
+    border: 0.25em solid #505050;
+}
+
+ftui-button.circle-thin.active #icon {
+    border-color: #aa6900;
+    color: #aa6900;
+}
+

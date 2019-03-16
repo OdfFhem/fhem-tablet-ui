@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!--
+    /* FHEM tablet ui */
+    /**
+    * UI builder framework for FHEM
+    *
+    * Version: 3.0.0
+    *
+    * Copyright (c) 2015-2019 Mario Stephan <mstephan@shared-files.de>
+    * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+    * https://github.com/knowthelist/fhem-tablet-ui
+    */
+    -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <script src="js/fhem-tablet-ui.js" defer></script>
+  <link href="css/fhem-tablet-ui.css" rel="stylesheet" type="text/css">
+
+  <meta name='debug' content='2'>
+
+  <title>FTUI Test-Simple</title>
+</head>
+
+<body>
+  <ftui-grid>
+    <ul>
+      <li data-row="1" data-col="1" data-sizey="2" data-sizex="3">
+        <header>BUTTON</header>
+        <ftui-button 
+            state-reading="dummy1" 
+            state-style='{
+              ".*":"fa fa-lightbulb",
+              "Wert1": "fa fa-car"}'></ftui-button>
+      </li>
+      <li data-row="1" data-col="4" data-sizey="2" data-sizex="6">
+        <header>EXAMPLE21</header>
+        <ftui-button state-reading="SchrankLicht_Sw" icon="fas fa-sync" text="refresh" class="btn-text"></ftui-button>
+      </li>
+      <li data-row="1" data-col="10" data-sizey="2" data-sizex="3">
+        <header>CIRCLE</header>
+        <div class="vbox">
+          <ftui-button state-reading="dummy1" class="circle-thin"></ftui-button>
+          <ftui-button state-reading="dummy1" icon="" text="15" text-class="big" class="circle-thin "></ftui-button>
+        </div>
+      </li>
+      <li data-row="3" data-col="1" data-sizey="2" data-sizex="3">
+        <header>LABEL</header>
+        <ftui-label text-reading="dummy1" class=""></ftui-label>
+      </li>
+      <li data-row="3" data-col="4" data-sizey="2" data-sizex="6">
+        <header>EXAMPLE23</header>
+        <ftui-symbol state-reading="dummy3"></ftui-symbol>
+        <ftui-button state-reading="SchrankLicht_Sw" icon="mdi mdi-refresh" text="refresh" class="btn-text"></ftui-button>
+      </li>
+      <li data-row="5" data-col="1" data-sizey="3" data-sizex="3">
+        <header>2LABEL</header>
+        <div class="vbox">
+          <ftui-label text-reading="dummy1" class=""></ftui-label>
+          <ftui-label text-reading="dummy1" class=""></ftui-label>
+        </div>
+      </li>
+      <li data-row="3" data-col="10" data-sizey="2" data-sizex="3">
+        <header>SYMBOL</header>
+        <div class="vbox">
+          <ftui-label text-reading="WebRadioInfo-Song" state-reading="WebRadioInfo-Song"
+            state-style='{".*": "white",".*Morgen.*":"red"}'></ftui-label>
+        </div>
+      </li>
+      <li data-row="5" data-col="4" data-sizey="3" data-sizex="6">
+        <header>Button</header>
+        <div class="vbox">
+
+          <ftui-button 
+              state-reading="dummy2" icon="" 
+              text-reading="dummy2" 
+              text-class="bigger">
+          </ftui-button>
+
+          <ftui-button 
+              state-reading="dummy2" 
+              state-style='{"on": "green bg-grey", "off": "tomato bg-grey"}'
+              text="Pumpe" 
+              icon="" >
+          </ftui-button>
+
+          <div class="fa-stack fa-2x">
+            <div class="fa-stack-2x ftui-circle-thin"></div>
+            <ftui-label text-reading="AvReceiver:subwoofer-temporary-level">
+            </ftui-label>
+          </div>
+          <ftui-label text-reading="dummy1" class="big"></ftui-label>
+
+        </div>
+
+
+      </li>
+      <li data-row="5" data-col="10" data-sizey="3" data-sizex="3">
+        <header>EXAMPLE6</header>
+        <ftui-button 
+          state-reading="dummy1" 
+          state-style='"off": "mdi mdi-lightbulb",
+                        "on":"mdi mdi-lightbulb-on"'></ftui-button>
+        <div class="vbox">
+          <ftui-symbol 
+              state-reading="ftuitest" 
+              state-style='{ 
+              "0": "mdi mdi-garage bigger",
+              "40": "mdi mdi-garage-alert bigger active",
+              "80": "mdi mdi-garage-open bigger active"}'>
+          </ftui-symbol>
+          <ftui-symbol state-reading="ftuitest"></ftui-symbol>
+          <div class="center">
+            <ftui-label text-reading="SatReceiver-channel" class="inline white truncate w1x"></ftui-label>
+          </div>
+        </div>
+      </li>
+
+
+    </ul>
+  </ftui-grid >
+</body>
+
+</html>

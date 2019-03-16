@@ -1,0 +1,124 @@
+ftui-grid {
+  position: relative;
+}
+ftui-grid > ul > li {
+  background-color: #999;
+  position: absolute;
+  list-style: none;
+}
+
+ftui-grid .row:after {
+  content: "";
+  display: table;
+  clear: both;
+  text-align: center;
+  vertical-align: middle;
+}
+
+ftui-grid .row > div {
+  vertical-align: middle;
+}
+
+[class*='col-'],
+.col {
+  float: left;
+  text-align: center;
+  height: 100%;
+  min-height: 1px;
+}
+
+.fullsize,
+ftui-grid > ul {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+ftui-grid {
+  width: 100%;
+  height: 100%;
+}
+
+ftui-grid > * {
+  margin: 0;
+  padding: 0;
+}
+
+ftui-grid .gs_w {
+  background: #FFF;
+  cursor: pointer;
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+ftui-grid > ul > li,
+.card {
+  background-color: #2A2A2A;
+}
+
+ftui-grid > ul > li.round {
+  border-radius: 17px;
+}
+
+ftui-grid li header,
+.dialog > header,
+.card > header {
+  background: #262626;
+  color: #8c8c8c;
+  display: block;
+  font-size: 0.85em;
+  font-weight: bold;
+  line-height: 2em;
+  text-align: center;
+  width: 100%;
+}
+
+ftui-grid li header.transparent,
+.dialog > header.transparent,
+.card > header.transparent {
+  background: transparent;
+}
+
+ftui-grid li header,
+.dialog > header {
+  cursor: move;
+}
+
+.has_center {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.content-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* every single item is full height */
+ftui-grid li > header ~ .hbox:only-of-type,
+.dialog > header ~ .hbox:first-of-type:nth-last-of-type(1), 
+ftui-grid li > header ~ .center:not([data-type]):only-of-type, 
+.card > header ~ div:not([data-type]):only-of-type, 
+ftui-grid li header ~ div:first-of-type:nth-last-of-type(1) {
+  height: calc(100% - 2em);
+}
+
+ftui-grid li > header.large ~ .hbox:only-of-type,
+.dialog > header.large ~ .hbox:first-of-type:nth-last-of-type(1), 
+ftui-grid li > header.large ~ .center:not([data-type]):only-of-type, 
+.card > header.large~ div:not([data-type]):only-of-type, 
+ftui-grid li header.large ~ div:first-of-type:nth-last-of-type(1) {
+  height: calc(100% - 3em);
+}
+
+ftui-grid li > header.big ~ .hbox:only-of-type,
+.dialog > header.big ~ .hbox:first-of-type:nth-last-of-type(1), 
+ftui-grid li > header.big ~ .center:not([data-type]):only-of-type, 
+.card > header.big ~ div:not([data-type]):only-of-type, 
+ftui-grid li header.big ~ div:first-of-type:nth-last-of-type(1) {
+  height: calc(100% - 4em);
+}
