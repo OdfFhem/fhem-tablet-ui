@@ -1,5 +1,8 @@
 ftui-symbol {
-  display: block;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 ftui-symbol #wrapper {
@@ -16,9 +19,9 @@ ftui-symbol #icon {
     border-radius: 50%;
     background-color: transparent;
     color: #505050;
-    width: 3.8em;
-    height: 3.8em;
-    margin: 0.1em;
+    width: 4em;
+    height: 4em;
+    line-height: 4em;
 }
 
 ftui-symbol.active #icon,
@@ -28,6 +31,6 @@ ftui-symbol #icon.active  {
 
 
 ftui-symbol #icon:before {
-    line-height: 2em;
-    font-size: 1.9em;
+    /* line-height: 2em; */
+    font-size: 2em;
 }

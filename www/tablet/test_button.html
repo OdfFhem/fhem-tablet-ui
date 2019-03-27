@@ -25,16 +25,15 @@
 </head>
 
 <body>
-  <ftui-grid>
-    <ul>
-      <li data-row="1" data-col="1" data-sizey="4" data-sizex="3">
+  <ftui-grid base-height="250">
+    <ftui-grid-tile row="1" col="1" height="14" width="3">
         <header>SIMPLE</header>
         <ftui-button state-reading="dummy1" 
                     state-style='{
-                      ".*":"fa-lightbulb-o",
-                      "Wert1": "fa-car green"
+                      ".*":"fa fa-lightbulb",
+                      "Wert1": "fa fa-car green"
                     }' 
-                    info-reading="dummy1-volume" 
+                    info-reading="dummy1:volume" 
                     info-style='{
                       "9": "bg-red"
                     }'></ftui-button>
@@ -92,8 +91,7 @@
         <ftui-button state-reading="dummy2"></ftui-button>
         <ftui-button state-reading="dummy1"></ftui-button>
         <ftui-button state-reading="dummy2"></ftui-button>
-      </li>
-    </ul>
+      </ftui-grid-tile>
   </ftui-grid>
 </body>
 

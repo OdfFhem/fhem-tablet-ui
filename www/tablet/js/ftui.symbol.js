@@ -2,49 +2,42 @@ class FtuiSymbol extends FtuiWidget {
 
   constructor() {
     const defaults = {
-      getOn: 'on',
-      getOff: 'off',
-      icon: 'fa ftui-window'
+      states: {'.*':'on','off':'off'},
+      stateStyles: {'.*' : '', 'on' : 'active'},
+      icon: 'fa ftui-window',
+      iconClass: '',
     };
     super(defaults);
 
     const button = `<div id="wrapper">
-        <div id="icon" class="${this.icon}"></div>
+        <div id="icon" class="${this.icon} ${this.iconClass}"></div>
       </div>`;
 
     this.insertAdjacentHTML('beforeend', button);
     this.elementIcon = this.querySelector('#icon');
 
     ftui.addReading(this.stateReading).subscribe(param => this.onUpdateState(param));
-    ftui.addReading(this.infoReading).subscribe(param => this.onUpdateInfo(param));
+    ftui.addReading(this.iconReading).subscribe(param => this.onUpdateIcon(param));
   }
 
   onUpdateState(param) {
-    if (ftui.isValid(param.value)) {
-      if (param.value.match(new RegExp(this.getOn))) {
-        this.classList.add('active');
-      }
-      if (param.value.match(new RegExp(this.getOff))) {
-        this.classList.remove('active');
-      }
+    this.setStyle(param.value);
+  }
 
-      if (this.stateStyle) {
-        if (this.icon) {
-          this.elementIcon.classList.remove(...this.icon.split(' '));
-        }
-        this.elementIcon.classList.remove(...this.allStyles(this.stateStyle));
-        this.elementIcon.classList.add(...this.matchingStyles(this.stateStyle, param));
-      }
+  setStyle(value) {
+    if (this.stateStyles) {
+      this.elementIcon.classList.remove(...this.allStyles(this.stateStyles));
+      this.elementIcon.classList.add(...this.matchingStyles(this.stateStyles, { value: value }));
     }
   }
 
-  onUpdateInfo(param) {
-    if (this.infoStyle) {
+  onUpdateIcon(param) {
+    if (this.iconStyle) {
       if (this.icon) {
         this.elementIcon.classList.remove(...this.icon.split(' '));
       }
-      this.elementIcon.classList.remove(...this.allStyles(this.infoStyle));
-      this.elementIcon.classList.add(...this.matchingStyles(this.infoStyle, param));
+      this.elementIcon.classList.remove(...this.allStyles(this.iconStyle));
+      this.elementIcon.classList.add(...this.matchingStyles(this.iconStyle, param));
     }
   }
 }

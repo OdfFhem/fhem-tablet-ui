@@ -49,21 +49,12 @@ class FtuiWidget extends HTMLElement {
 
   allStyles(attribute) {
     const map = ftui.parseObject(attribute);
-    return Object.values(map).map(value => value).join(' ').split(' ');
+    return Object.values(map).map(value => value).join(' ').split(' ').filter(String);
   }
 
   matchingStyles(attribute, param) {
-    let matchValue = '';
-    const map = ftui.parseObject(attribute);
-
-    Object.entries(map).forEach(([key, value]) => {
-      if (param.value === key ||
-        parseFloat(param.value) >= parseFloat(key) ||
-        param.value.match('^' + key + '$')) {
-        matchValue = value;
-      }
-    });
-    return matchValue ? matchValue.split(' ') : [];
+    const matchValue = ftui.matchingValue(attribute, param.value);
+    return matchValue ? matchValue.split(' ').filter(String) : [];
   }
 }
 
@@ -142,8 +133,6 @@ const ftui = {
     ftui.config.longPollFilter = ftui.getMetaString('longpoll_filter');
 
     ftui.config.debuglevel = ftui.getMetaNumber('debug');
-    ftui.config.webDevice = ftui.getMetaString('web_device', 'WEB');
-    ftui.config.webParamId = ftui.config.webDevice + '-longpoll';
     ftui.config.maxLongpollAge = ftui.getMetaNumber('longpoll_maxage', 240);
     ftui.config.DEBUG = (ftui.config.debuglevel > 0);
     ftui.config.TOAST = ftui.getMetaNumber('toast', 5); // 1,2,3...= n Toast-Messages, 0: No Toast-Messages
@@ -227,9 +216,6 @@ const ftui = {
       ftui.triggerEvent('shadeClicked');
     });
 
-
-    ftui.subscriptions[ftui.config.webParamId] = { device: ftui.config.webDevice, reading: 'longpoll' };
-
     // init Page after CSFS Token has been retrieved
     Promise.all(initDeferreds).then(() => {
       ftui.initPage('html');
@@ -279,17 +265,28 @@ const ftui = {
     const initDefer = ftui.deferred();
     area = (ftui.isValid(area)) ? area : 'html';
     const widgetTypes = [];
-    ftui.selectElements(':not(:defined)', area).forEach(elem => {
-      const type = elem.localName;
+    // Fetch all the children of <ftui-*> that are not defined yet.
+    const undefineWidgets = ftui.selectElements(':not(:defined)', area);
 
+    undefineWidgets.forEach(elem => {
+      const type = elem.localName;
+      // ToDo: use filter
       if (!widgetTypes.includes(type)) {
         widgetTypes.push(type);
-        ftui.dynamicload(ftui.config.basedir + 'js/' + type.replace('-', '.') + '.js', true);
       }
     });
 
-    // Fetch all the children of <share-buttons> that are not defined yet.
-    const undefineWidgets = document.querySelectorAll(':not(:defined)');
+
+    const regexp = new RegExp('^ftui-[a-z]+$', 'i');
+    widgetTypes
+      .filter(type => {
+
+        const match = regexp.test(type);
+        return match;
+      })
+      .forEach(type => {
+        ftui.dynamicload(ftui.config.basedir + 'js/' + type.replace('-', '.') + '.js', true)
+      });
 
     const promises = [...undefineWidgets].map(widget => {
       //console.log(widget);
@@ -449,18 +446,17 @@ const ftui = {
       }
     }
     window.performance.mark('start get jsonlist2');
-
     ftui.poll.short.request =
       ftui.sendFhemCommand('jsonlist2 ' + ftui.poll.short.filter)
         .then(res => res.json())
         .then(fhemJSON => this.parseShortpollResult(fhemJSON, silent)
         )
-        .catch(error => {
-          ftui.log(1, 'shortPoll: request failed: ' + error, 'error');
-          ftui.poll.short.result = error;
-          ftui.states.lastSetOnline = 0;
-          ftui.states.lastShortpoll = 0;
-        });
+    // .catch(error => {
+    //   ftui.log(1, 'shortPoll: request failed: 111111' + error, 'error');
+    //   ftui.poll.short.result = error;
+    //   ftui.states.lastSetOnline = 0;
+    //   ftui.states.lastShortpoll = 0;
+    // });
   },
 
   parseShortpollResult: function (fhemJSON, silent) {
@@ -551,6 +547,8 @@ const ftui = {
       window.performance.getEntriesByType('measure').forEach(entry => {
         performance += [entry.name, ':', entry.duration.toFixed(0), 'ms', '<br>'].join(' ');
       })
+      window.performance.clearMeasures();
+      window.performance.clearMarks();
       ftui.toast(performance);
     }
   },
@@ -1178,15 +1176,25 @@ const ftui = {
     return response;
   },
 
+  parseArray: function (value) {
+    if (typeof value === 'string') {
+      value = ftui.parseJSON(!value.match(/^[[]/) ? '[' + value + ']' : value);
+    }
+    return value;
+  },
+
   parseObject: function (value) {
-    return value ? ftui.parseJSON(value) : {};
+    if (typeof value === 'string') {
+      value = ftui.parseJSON(!value.match(/^{/) ? '{' + value + '}' : value);
+    }
+    return value;
   },
 
   parseJSON: function (json) {
     let parsed;
     if (json) {
       try {
-        parsed = json.match(/^{/) ? JSON.parse(json) : JSON.parse('{' + json + '}');
+        parsed = JSON.parse(json);
       } catch (e) {
         ftui.log(1, 'Error while parseJSON: ' + e, 'error');
       }
@@ -1197,6 +1205,21 @@ const ftui = {
   isNumeric: function (value) {
     return !isNaN(parseFloat(value)) && isFinite(value);
   },
+
+  matchingValue: function (mapAttribute, searchKey) {
+    let matchValue = null;
+    const map = ftui.parseObject(mapAttribute);
+    Object.entries(map).forEach(([key, value]) => {
+      if (searchKey === key ||
+        parseFloat(searchKey) >= parseFloat(key) ||
+        searchKey.match('^' + key + '$')) {
+        matchValue = value;
+      }
+    });
+    return matchValue;
+  },
+
+  // DOM functions
 
   getAllTagMatches: function (regEx) {
     return Array.prototype.slice.call(document.querySelectorAll('*')).filter(function (el) {

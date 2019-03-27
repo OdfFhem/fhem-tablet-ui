@@ -3,18 +3,21 @@ class FtuiButton extends FtuiWidget {
   constructor() {
     const defaults = {
       cmd: 'set',
-      getOn: 'on',
-      getOff: 'off',
-      setOn: 'on',
-      setOff: 'off',
-      icon: 'mdi mdi-lightbulb',
+      states: {'.*':'on','off':'off'},
+      stateStyles: {'.*' : '', 'on' : 'active'},
+      icon: 'mdi mdi-lightbulb-outline',
       text: '',
-      textClass: ''
+      textClass: '',
+      iconClass: '',
+      stateIndex: 0
     };
     super(defaults);
+    
+    this.states = ftui.parseObject(this.states);
+    this.stateArray = Object.values(this.states);
 
     const button = `<div id="wrapper">
-      <div id="icon" class="${this.icon}">
+      <div id="icon" class="${this.icon} ${this.iconClass}">
       <span id="text" class="${this.textClass}">${this.text}</span></div>`;
 
     this.insertAdjacentHTML('beforeend', button);
@@ -22,7 +25,7 @@ class FtuiButton extends FtuiWidget {
     this.elementText = this.querySelector('#text');
 
     ftui.addReading(this.stateReading).subscribe(param => this.onUpdateState(param));
-    ftui.addReading(this.infoReading).subscribe(param => this.onUpdateInfo(param));
+    ftui.addReading(this.iconReading).subscribe(param => this.onUpdateIcon(param));
     ftui.addReading(this.textReading).subscribe(param => this.onUpdateText(param));
 
     this.addEventListener('click', event => {
@@ -34,42 +37,35 @@ class FtuiButton extends FtuiWidget {
   }
 
   onClicked() {
-    if (this.classList.contains('active')) {
-      this.classList.remove('active');
-      this.value = this.setOff;
-    } else {
-      this.classList.add('active');
-      this.value = this.setOn;
-    }
+    this.stateIndex = ++this.stateIndex % this.stateArray.length;
+    this.value = this.stateArray[this.stateIndex];
+    this.setStyle(this.value);
     this.submitUpdate(this.stateReading);
   }
 
   onUpdateState(param) {
-    if (ftui.isValid(param.value)) {
-      if (param.value.match(new RegExp(this.getOn))) {
-        this.classList.add('active');
-      }
-      if (param.value.match(new RegExp(this.getOff))) {
-        this.classList.remove('active');
-      }
+    const value = ftui.matchingValue(this.states, param.value);
+    if (value !== null) {
+      this.value = value;
+      this.stateIndex = this.stateArray.indexOf(value);
+    }
+    this.setStyle(param.value);
+  }
 
-      if (this.stateStyle) {
-        if (this.icon) {
-          this.elementIcon.classList.remove(...this.icon.split(' '));
-        }
-        this.elementIcon.classList.remove(...this.allStyles(this.stateStyle));
-        this.elementIcon.classList.add(...this.matchingStyles(this.stateStyle, param));
-      }
+  setStyle(value) {
+    if (this.stateStyles) {
+      this.elementIcon.classList.remove(...this.allStyles(this.stateStyles));
+      this.elementIcon.classList.add(...this.matchingStyles(this.stateStyles, { value: value }));
     }
   }
 
-  onUpdateInfo(param) {
-    if (this.infoStyle) {
+  onUpdateIcon(param) {
+    if (this.iconStyle) {
       if (this.icon) {
         this.elementIcon.classList.remove(...this.icon.split(' '));
       }
-      this.elementIcon.classList.remove(...this.allStyles(this.infoStyle));
-      this.elementIcon.classList.add(...this.matchingStyles(this.infoStyle, param));
+      this.elementIcon.classList.remove(...this.allStyles(this.iconStyle));
+      this.elementIcon.classList.add(...this.matchingStyles(this.iconStyle, param));
     }
   }
 

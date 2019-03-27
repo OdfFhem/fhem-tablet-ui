@@ -1,14 +1,29 @@
+class FtuiGridTile extends FtuiWidget {
+
+  constructor() {
+    const defaults = {
+      row: 0,
+      col: 0,
+      height: 0,
+      width: 0,
+    };
+    super(defaults);
+  }
+}
+
+window.customElements.define('ftui-grid-tile', FtuiGridTile);
+
 class FtuiGrid extends FtuiWidget {
 
   constructor() {
     const defaults = {
       minX: 0,
       minY: 0,
-      baseX: 0,
-      baseY: 0,
+      baseWidth: 0,
+      baseHeight: 0,
       cols: 0,
       rows: 0,
-      margin: 8,
+      margin: 8
     };
     super(defaults);
 
@@ -28,43 +43,42 @@ class FtuiGrid extends FtuiWidget {
   configureGrid() {
     let highestCol = -1;
     let highestRow = -1;
-    let baseX = 0;
-    let baseY = 0;
+    let baseWidth = 0;
+    let baseHeight = 0;
     let cols = 0;
     let rows = 0;
 
-    this.querySelectorAll('ul > li').forEach(item => {
-      const colVal = Number(item.dataset.col) + Number(item.dataset.sizex) - 1;
+    this.querySelectorAll('ftui-grid-tile').forEach(item => {
+      const colVal = Number(item.col) + Number(item.width) - 1;
       if (colVal > highestCol) { highestCol = colVal; }
-      const rowVal = Number(item.dataset.row) + Number(item.dataset.sizey) - 1;
+      const rowVal = Number(item.row) + Number(item.height) - 1;
       if (rowVal > highestRow) { highestRow = rowVal; }
     });
 
     cols = (this.cols > 0) ? this.cols : highestCol;
     rows = (this.rows > 0) ? this.rows : highestRow;
 
-    baseX = (this.baseX > 0) ? this.baseX : (window.innerWidth - this.margin) / cols;
-    baseY = (this.baseY > 0) ? this.baseY : (window.innerHeight - this.margin) / rows;
+    baseWidth = (this.baseWidth > 0) ? this.baseWidth : (window.innerWidth - this.margin) / cols;
+    baseHeight = (this.baseHeight > 0) ? this.baseHeight : (window.innerHeight - this.margin) / rows;
 
-    if (baseX < this.minX) {
-      baseX = this.minX;
+    if (baseWidth < this.minX) {
+      baseWidth = this.minX;
     }
-    if (baseY < this.minY) {
-      baseY = this.minY;
+    if (baseHeight < this.minY) {
+      baseHeight = this.minY;
     }
 
-    this.querySelectorAll('ul > li').forEach(item => {
+    this.querySelectorAll('ftui-grid-tile').forEach(item => {
       const style = item.style;
-      const data = item.dataset;
-      style.width = (data.sizex * baseX - this.margin) + 'px';
-      style.height = (data.sizey * baseY - this.margin) + 'px';
+      style.width = (item.width * baseWidth - this.margin) + 'px';
+      style.height = (item.height * baseHeight - this.margin) + 'px';
       if (item.querySelector('ftui-grid')) {
         style.backgroundColor = 'transparent';
-        style.left = ((data.col - 1) * baseX) + 'px';
-        style.top = ((data.row - 1) * baseY) + 'px';
+        style.left = ((item.col - 1) * baseWidth) + 'px';
+        style.top = ((item.row - 1) * baseHeight) + 'px';
       } else {
-        style.left = ((data.col - 1) * baseX + this.margin) + 'px';
-        style.top = ((data.row - 1) * baseY + this.margin) + 'px';
+        style.left = ((item.col - 1) * baseWidth + this.margin) + 'px';
+        style.top = ((item.row - 1) * baseHeight + this.margin) + 'px';
       }
     });
 

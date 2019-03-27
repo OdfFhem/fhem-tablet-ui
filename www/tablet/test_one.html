@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!--
+    /* FHEM tablet ui */
+    /**
+    * UI builder framework for FHEM
+    *
+    * Version: 3.0.0
+    *
+    * Copyright (c) 2015-2019 Mario Stephan <mstephan@shared-files.de>
+    * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+    * https://github.com/knowthelist/fhem-tablet-ui
+    */
+    -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <script src="js/fhem-tablet-ui.js" defer></script>
+  <link href="css/fhem-tablet-ui.css" rel="stylesheet" type="text/css">
+
+  <meta name='debug' content='2'>
+
+  <title>FTUI Test-Simple</title>
+</head>
+
+<body>
+  <ftui-grid>
+
+
+      <ftui-grid-tile row="1" col="1" height="2" width="6">
+        <header>EXAMPLE21</header>
+        <ftui-button state-reading="dummy1" states='".*": "off", "on" : "on"'
+          state-styles='"Wert1|Wert2": "bg-blue", "on": "bg-seagreen", "off": "bg-gray"' 
+           icon="fas fa-sync" text="refresh" class="btn-text small">
+        </ftui-button>
+      </ftui-grid-tile>
+
+
+  </ftui-grid>
+</body>
+
+</html>

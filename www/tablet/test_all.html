@@ -25,64 +25,86 @@
 
 <body>
   <ftui-grid>
-    <ul>
-      <li data-row="1" data-col="1" data-sizey="2" data-sizex="3">
-        <header>BUTTON</header>
-        <ftui-button 
-            state-reading="dummy1" 
-            state-style='{
-              ".*":"fa fa-lightbulb",
-              "Wert1": "fa fa-car"}'></ftui-button>
-      </li>
-      <li data-row="1" data-col="4" data-sizey="2" data-sizex="6">
+
+      <ftui-grid-tile row="1" col="1" height="2" width="3">
+        <header>BUTTONS</header>
+        <div class="vbox">
+          <div class="hbox">
+            <ftui-button state-reading="dummy1" class="btn-round"></ftui-button>
+            <div class="w-20 text-left">Lamp1</div>
+            <ftui-button state-reading="dummy2" class="btn-round"></ftui-button>
+            <div class="w-25 text-left">Lamp2</div>
+          </div>
+          <div class="hbox">
+            <ftui-button state-reading="dummy3" class="btn-round"></ftui-button>
+            <div class="w-20 text-left">Lamp3</div>
+            <ftui-button state-reading="dummy4" class="btn-round"></ftui-button>
+            <div class="w-25 text-left">Lamp4</div>
+          </div>
+        </div>
+      </ftui-grid-tile>
+
+      <ftui-grid-tile row="1" col="4" height="2" width="6">
         <header>EXAMPLE21</header>
-        <ftui-button state-reading="SchrankLicht_Sw" icon="fas fa-sync" text="refresh" class="btn-text"></ftui-button>
-      </li>
-      <li data-row="1" data-col="10" data-sizey="2" data-sizex="3">
+        <ftui-button state-reading="SchrankLicht_Sw" states='{".*": "off", "on" : "on"}'
+          state-styles='{"set_on|set_off": "bg-blue", "on": "bg-seagreen", "off": "bg-gray"}' 
+           icon="fas fa-sync" text="refresh" class="btn-text small">
+        </ftui-button>
+      </ftui-grid-tile>
+
+      <ftui-grid-tile row="1" col="10" height="2" width="3">
         <header>CIRCLE</header>
         <div class="vbox">
-          <ftui-button state-reading="dummy1" class="circle-thin"></ftui-button>
-          <ftui-button state-reading="dummy1" icon="" text="15" text-class="big" class="circle-thin "></ftui-button>
+          <ftui-button class="circle-thin" state-reading="dummy1"></ftui-button>
+          <ftui-button class="btn-rounded" state-reading="dummy1" text="Light" icon=""></ftui-button>
+          
+
+          <ftui-button class="circle-thin" state-reading="dummy1" icon="" text="15" text-class="big"></ftui-button>
         </div>
-      </li>
-      <li data-row="3" data-col="1" data-sizey="2" data-sizex="3">
+      </ftui-grid-tile>
+
+      <ftui-grid-tile row="3" col="1" height="2" width="3">
         <header>LABEL</header>
-        <ftui-label text-reading="dummy1" class=""></ftui-label>
-      </li>
-      <li data-row="3" data-col="4" data-sizey="2" data-sizex="6">
+        <div class="center">
+          <ftui-label text-reading="SatReceiver-channel" class="bigger thin"></ftui-label>
+        </div>
+      </ftui-grid-tile>
+
+      <ftui-grid-tile row="3" col="4" height="2" width="6">
         <header>EXAMPLE23</header>
         <ftui-symbol state-reading="dummy3"></ftui-symbol>
-        <ftui-button state-reading="SchrankLicht_Sw" icon="mdi mdi-refresh" text="refresh" class="btn-text"></ftui-button>
-      </li>
-      <li data-row="5" data-col="1" data-sizey="3" data-sizex="3">
-        <header>2LABEL</header>
+        <ftui-button state-reading="SchrankLicht_Sw" icon="mdi mdi-refresh" text="refresh" class="btn-text">
+        </ftui-button>
+      </ftui-grid-tile>
+
+      <ftui-grid-tile row="5" col="1" height="3" width="3">
+        <header>BUTTON SQUARE</header>
         <div class="vbox">
-          <ftui-label text-reading="dummy1" class=""></ftui-label>
-          <ftui-label text-reading="dummy1" class=""></ftui-label>
+          <ftui-button class="btn-square" state-reading="dummy1"
+                      state-styles='{".*": "", "on": "bg-seagreen seagreen"}'></ftui-button>
+          <ftui-label text-reading="dummy1"></ftui-label>
+          <ftui-button class="btn-square"  state-reading="dummy2" 
+                      state-styles='{".*": "", "on": "royalblue bg-royalblue"}'></ftui-button>
         </div>
-      </li>
-      <li data-row="3" data-col="10" data-sizey="2" data-sizex="3">
+      </ftui-grid-tile>
+
+      <ftui-grid-tile row="3" col="10" height="2" width="3">
         <header>SYMBOL</header>
         <div class="vbox">
           <ftui-label text-reading="WebRadioInfo-Song" state-reading="WebRadioInfo-Song"
             state-style='{".*": "white",".*Morgen.*":"red"}'></ftui-label>
         </div>
-      </li>
-      <li data-row="5" data-col="4" data-sizey="3" data-sizex="6">
+      </ftui-grid-tile>
+
+      <ftui-grid-tile row="5" col="4" height="3" width="6">
         <header>Button</header>
         <div class="vbox">
 
-          <ftui-button 
-              state-reading="dummy2" icon="" 
-              text-reading="dummy2" 
-              text-class="bigger">
+          <ftui-button state-reading="dummy2" icon="" text-reading="dummy2" text-class="bigger">
           </ftui-button>
 
-          <ftui-button 
-              state-reading="dummy2" 
-              state-style='{"on": "green bg-grey", "off": "tomato bg-grey"}'
-              text="Pumpe" 
-              icon="" >
+          <ftui-button state-reading="dummy2" state-style='{"on": "green bg-grey", "off": "tomato bg-grey"}'
+            text="Pumpe" icon="">
           </ftui-button>
 
           <div class="fa-stack fa-2x">
@@ -93,33 +115,26 @@
           <ftui-label text-reading="dummy1" class="big"></ftui-label>
 
         </div>
+      </ftui-grid-tile>
 
-
-      </li>
-      <li data-row="5" data-col="10" data-sizey="3" data-sizex="3">
+      <ftui-grid-tile row="5" col="10" height="3" width="3">
         <header>EXAMPLE6</header>
-        <ftui-button 
-          state-reading="dummy1" 
-          state-style='"off": "mdi mdi-lightbulb",
-                        "on":"mdi mdi-lightbulb-on"'></ftui-button>
         <div class="vbox">
-          <ftui-symbol 
-              state-reading="ftuitest" 
-              state-style='{ 
-              "0": "mdi mdi-garage bigger",
-              "40": "mdi mdi-garage-alert bigger active",
-              "80": "mdi mdi-garage-open bigger active"}'>
+          <ftui-button state-reading="dummy1" 
+          icon-reading="dummy1"
+          icon-style='"off": "mdi mdi-lightbulb",
+                          "on":"mdi mdi-lightbulb-on"'>
+          </ftui-button>
+          <ftui-symbol icon-reading="ftuitest" icon-class="bg-green bg-small" icon-style='{ 
+              "0": "mdi mdi-garage-open bigger red",
+              "40": "mdi mdi-garage-alert bigger orange",
+              "80": "mdi mdi-garage bigger"}'>
           </ftui-symbol>
           <ftui-symbol state-reading="ftuitest"></ftui-symbol>
-          <div class="center">
-            <ftui-label text-reading="SatReceiver-channel" class="inline white truncate w1x"></ftui-label>
-          </div>
         </div>
-      </li>
+      </ftui-grid-tile>
 
-
-    </ul>
-  </ftui-grid >
+  </ftui-grid>
 </body>
 
 </html>
